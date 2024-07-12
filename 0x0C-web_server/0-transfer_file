@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Transfers a file from local host to remote host
 
 if [ #? -ne 4 ]
 then

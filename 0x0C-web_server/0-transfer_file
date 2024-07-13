@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # Transfers a file from local host to remote host
 
-if [ #? -ne 4 ]
-then
+set -x
+
+if [ $# -ne 4 ]; then
   echo -e "Usage: 0-transfer_file PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
   exit 1
 else
@@ -15,18 +16,16 @@ USERNAME="$3"
 PATH_2_SSH_KEY="$4"
 
 Remote_host="$USERNAME@$IP"
-local_host="$USERNAME@$HOSTNAME"
 
 # Test connectivity to remote location
-scp -q ${Remote_host}:~/ /dev/null
+scp -i ${PATH_2_SSH_KEY}  -q ${Remote_host}:~/.ssh/authorized_keys /dev/null
 
 if [ $? -eq 0 ]; then
-
 # Secure copy to remote location using scp
-	scp ${Local_host}:${PATH_2_FILE} ${IP}:~/
-	echo -e "Copying in progress....\n ...... \n .....\n"
-	sleep 1
-	echo -e "Schema Copied to $Remote_location \n"
+  scp -i ${PATH_2_SSH_KEY} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r  ${PATH_2_FILE} ${Remote_host}:~/
+  echo -e "Copying in progress....\n ...... \n .....\n"
+  sleep 1
+  echo -e "Schema Copied to $Remote_host \n"
 else
-	echo -e  "\nRemote location not reachable, check your connection/IP"
+  echo -e  "\nRemote location not reachable, check your connection/IP"
 fi

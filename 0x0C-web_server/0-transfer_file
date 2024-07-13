@@ -19,14 +19,14 @@ Remote_host="$USERNAME@$IP"
 chmod 600 ${PATH_2_SSH_KEY}
 
 # Test connectivity to remote location
-scp -i ${PATH_2_SSH_KEY}  -q ${Remote_host}:~/.ssh/authorized_keys /dev/null
+#scp -i ${PATH_2_SSH_KEY}  -q ${Remote_host}:~/.ssh/authorized_keys /dev/null
 
 if [ $? -eq 0 ]; then
 # Secure copy to remote location using scp
   scp -i ${PATH_2_SSH_KEY} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r  ${PATH_2_FILE} ${Remote_host}:~/
   echo -e "Copying in progress....\n ...... \n .....\n"
   sleep 1
-  echo -e "Schema Copied to $Remote_host \n"
+  echo -e "File Copied to $Remote_host \n"
 else
   echo -e  "\nRemote location not reachable, check your connection/IP"
 fi

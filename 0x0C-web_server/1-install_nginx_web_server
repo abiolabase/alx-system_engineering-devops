@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Configure Nginx Server
+
+# Install Nginx Server
+sudo apt-get -y update
+sudo apt-get -y install nginx
+
+# Reconfigure firewall to allow port 80
+sudo ufw allow 'Nginx HTTP'
+
+# Temporarily change the owner of the html folder
+sudo chown $USER:$USER /var/www/html/
+
+# Change the page output
+echo "Hello World!" > /var/www/html/index.html
+
+# Start Nginx Server
+sudo systemctl start nginx
+
+# Reassign the folder back to root
+sudo chown root:root /var/www/html/
